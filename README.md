@@ -1,66 +1,44 @@
-## Foundry
+# 💀 Dead Man’s Wallet
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A **self-expiring smart wallet** on Monad that transfers your assets to an heir if you go inactive for too long.  
+Inspired by the saying: *"Dead men tell no tales."* — but they do leave tokens behind.
 
-Foundry consists of:
+---
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## 🧠 Overview
 
-## Documentation
+The **Dead Man’s Wallet** is a smart contract designed for digital inheritance.  
+It allows a user to:
 
-https://book.getfoundry.sh/
+- ✅ Set a timeout period (e.g. 7 days)
+- ✅ Ping the wallet periodically to prove they’re alive (`heartbeat`)
+- ✅ Automatically allow the `heir` to claim the wallet’s funds if the owner goes silent
 
-## Usage
+---
 
-### Build
+## ⚙️ Features
 
-```shell
-$ forge build
-```
+| Feature        | Description |
+|----------------|-------------|
+| 🫀 `heartbeat()` | Owner pings the wallet to stay alive |
+| ☠️ `claim()`     | Heir claims the balance if timeout passed |
+| 🔍 `canClaim()` | Checks whether heir can claim |
+| 📅 `lastPing()` | Returns last active timestamp |
+| 👤 `owner()`     | View owner address |
+| 🧬 `heir()`      | View heir address |
 
-### Test
+---
 
-```shell
-$ forge test
-```
+## 🚀 Getting Started
 
-### Format
+### Prerequisites
 
-```shell
-$ forge fmt
-```
+- [Foundry](https://book.getfoundry.sh/)
+- Monad RPC endpoint (testnet or mainnet)
+- Environment variables set:
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+```env
+PRIVATE_KEY=0xYOUR_OWNER_KEY
+HEIR_PRIVATE_KEY=0xYOUR_HEIR_KEY
+CONTRACT_ADDRESS=0xDEPLOYED_ADDRESS
+MONAD_RPC_URL=https://rpc.testnet.monad.xyz
